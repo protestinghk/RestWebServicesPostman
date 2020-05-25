@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "1cf2e72c-2cd7-4698-bd84-596fa93712bc",
+		"name": "RestWebServices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Request",
+			"item": [
+				{
+					"name": "TC_1_GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b42e104-e901-4f4a-b5f2-2e8cd178e005",
+								"exec": [
+									"tests[\"Validating status code\"] = responseCode.code === 200;\r",
+									"tests[\"Validating response header\"] = postman.getResponseHeader(\"Content-Type\");\r",
+									"tests[\"Response time is acceptable\"] = _.inRange(responseTime, 10, 1000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users?page=2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC_2_GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7158e2b9-01a3-44ec-8cc8-2fec36c9eb46",
+								"exec": [
+									"tests[\"Validating Status Code\"] = responseCode.code === 200;",
+									"tests[\"Validating response Body has Janet Weaver\"] = responseBody.has(\"Janet\") && responseBody.has(\"Weaver\");",
+									"tests[\"Validating response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"postman.setNextRequest(\"TC_3_POST\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC_6_GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "705ba1cb-dae2-44ed-8836-1f63d49d49a1",
+								"exec": [
+									"tests[\"Validating response body\"] = responseBody.has(\"success\");\r",
+									"tests[\"Validating status code\"] = responseCode.code=== 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://dummy.restapiexample.com/api/v1/employees",
+							"protocol": "http",
+							"host": [
+								"dummy",
+								"restapiexample",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC_7_GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6ac6bae-b5df-4f44-ac2d-425e013fc440",
+								"exec": [
+									"postman.setNextRequest(\"TC_8_POST\");\r",
+									"\r",
+									"tests[\"Validating status code\"] = responseCode.code === 401;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://dummy.restapiexample.com/api/v1/employee/700",
+							"protocol": "http",
+							"host": [
+								"dummy",
+								"restapiexample",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"700"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Post Request",
+			"item": [
+				{
+					"name": "TC_3_POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dbf18bf9-5fa6-4fe5-9e97-8c12c57a0d16",
+								"exec": [
+									"tests[\"Validating reponse body\"] = responseBody.has(\"morpheus\");\r",
+									"tests[\"Validating reponse body\"] = responseBody.has(\"leader\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\" : {{NAME}},\n\"job\" : \"leader\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC_4_POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85fceb46-064d-4a1c-ad05-91d831a2c7f3",
+								"exec": [
+									"tests[\"Validating status code string\"] = responseCode.name.has(\"Bad Request\")\r",
+									"tests[\"Validating response body\"] = responseBody.has(\"user not found\");\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter@klaven\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC_5_POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd1a530c-250f-4cea-bf88-aa83eaaa7377",
+								"exec": [
+									"postman.setNextRequest(\"TC_6_GET\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC_8_POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d222412b-2fa9-49d4-82d9-34cc2f240722",
+								"exec": [
+									"tests[\"Validating status contains stirng OK\"] = responseCode.name.has(\"OK\");\r",
+									"tests[\"Validating response body has Harish\"] = responseBody.has(\"Harish\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Harish\",\"salary\":\"60000\",\"age\":\"33\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://dummy.restapiexample.com/api/v1/create",
+							"protocol": "http",
+							"host": [
+								"dummy",
+								"restapiexample",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Put Request",
+			"item": [
+				{
+					"name": "TC_9_PUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75eaa925-0563-45e9-93ed-b35b95a4fdb9",
+								"exec": [
+									"tests[\"Validating response body employee_salary is updated to 70000\"] = responseBody.has(\"70000\");\r",
+									"tests[\"Validating status code\"] = responseCode.code === 200 || responseCode.code === 201;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Harish\",\"salary\":\"70000\",\"age\":\"33\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://dummy.restapiexample.com/api/v1/update/21",
+							"protocol": "http",
+							"host": [
+								"dummy",
+								"restapiexample",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"update",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Delete Request",
+			"item": [
+				{
+					"name": "TC_10_DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c569899-fb93-4d4d-a5a1-41e5d309484d",
+								"exec": [
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://dummy.restapiexample.com/api/v1/delete/700",
+							"protocol": "http",
+							"host": [
+								"dummy",
+								"restapiexample",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"delete",
+								"700"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f7f401c2-7a25-45d5-8a57-506ffcf79217",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d9808641-f2a8-4c15-bdd7-33f461b4a8ea",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "08c4f31f-0a85-424d-8b26-d25d532c40df",
+			"key": "URL",
+			"value": "https://reqres.in",
+			"type": "string"
+		},
+		{
+			"id": "a6e4476c-d5c5-4ba8-9e67-412ba677df9b",
+			"key": "NAME",
+			"value": "\"morpheus\"",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
